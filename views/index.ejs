@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tarefas</title>
+    <style>
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Lista de Tarefas</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Descrição</th>
+                <th>Data de Criação</th>
+                <th>Data Prevista</th>
+                <th>Data de Encerramento</th>
+                <th>Situação</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% tasks.forEach(task => { %>
+                <tr>
+                    <td><%= task.id %></td>
+                    <td><%= task.descricao %></td>
+                    <td><%= task.data_criacao.toLocaleDateString() %></td>
+                    <td><%= task.data_prevista.toLocaleDateString() %></td>
+                    <td><%= task.data_encerramento ? task.data_encerramento.toLocaleDateString() : '—' %></td>
+                    <td><%= task.situacao %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</body>
+</html>
