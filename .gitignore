@@ -1,0 +1,6 @@
+package-lock.json
+node_modules
+generated
+.env
+/.idea
+.DS_Store
