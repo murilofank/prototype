@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= assunto %></title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    .info {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #f0f0f0;
+      border-left: 4px solid #007bff;
+    }
+    .info p {
+      margin: 8px 0;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2><%= assunto %></h2>
+    <p>Olá, <strong><%= nomeUsuario %></strong>,</p>
+
+    <p>A seguinte tarefa foi <strong><%= tipoAcao %></strong> no sistema:</p>
+
+    <div class="info">
+      <p><strong>Descrição:</strong> <%= descricao %></p>
+      <p><strong>Data Prevista:</strong> <%= dataPrevista %></p>
+      <% if (dataEncerramento) { %>
+        <p><strong>Data de Conclusão:</strong> <%= dataEncerramento %></p>
+      <% } %>
+    </div>
+
+    <p>Você pode visualizar ou editar suas tarefas acessando o sistema.</p>
+
+    <div class="footer">
+      <p>Este é um e-mail automático. Por favor, não responda.</p>
+    </div>
+  </div>
+</body>
+</html>
