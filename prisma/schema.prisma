@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma/client"
 }
 
 datasource db {
@@ -20,6 +21,18 @@ model Tarefa {
   data_prevista     DateTime
   data_encerramento DateTime?
   situacao          String    @default("PENDENTE")
+  usuario_id        Int
+  usuario           Usuario   @relation(fields: [usuario_id], references: [id])
 
   @@map("tarefa")
+}
+
+model Usuario {
+  id      Int      @id @default(autoincrement())
+  nome    String
+  email   String   @unique
+  senha   String
+  tarefas Tarefa[]
+
+  @@map("usuario")
 }
