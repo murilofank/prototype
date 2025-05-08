@@ -1,18 +1,31 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import path from 'path';
+import session from 'express-session';
+import authRouter from './routes/auth.js';
+import tarefasRouter from './routes/tarefas.js';
+import { env } from 'process';
 
 const app = express();
-const prisma = new PrismaClient();
-const port = 3000;
+const PORT = 3000;
 
 app.set('view engine', 'ejs');
-app.use(express.urlencoded({ extended: true }));
+app.set('views', path.join(path.resolve(), 'views'));
 
-app.get('/', async (req, res) => {
-  const tasks = await prisma.tarefa.findMany({
-    orderBy: { data_criacao: 'desc' },
-  });
-  res.render('index', { tasks });
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+app.use(session({
+  secret: env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+}));
+
+//Routes
+app.use('/', authRouter);
+app.use('/tarefas', tarefasRouter);
+
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}`)
 });
 
-app.listen(port, () => console.log(`Server is running at http://localhost:${port}`));
+export default app;
