@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title><%= tarefa ? "Editar Tarefa" : "Nova Tarefa" %></title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><%= tarefa ? "Editar Tarefa" : "Nova Tarefa" %></h1>
+
+    <form method="POST" action="<%= tarefa ? '/tarefas/' + tarefa.id + '/editar/' : '/tarefas/nova' %>">
+      <label>Descrição:</label>
+      <input type="text" name="descricao" required value="<%= tarefa?.descricao || '' %>">
+
+      <label>Data Prevista:</label>
+      <input type="date" name="data_prevista" required value="<%= tarefa?.data_prevista?.toISOString().substring(0,10) || '' %>">
+
+      <% if (tarefa) { %>
+        <label>Situação:</label>
+        <select name="situacao">
+          <option value="PENDENTE" <%= tarefa.situacao === 'PENDENTE' ? 'selected' : '' %>>Pendente</option>
+          <option value="EM ANDAMENTO" <%= tarefa.situacao === 'EM ANDAMENTO' ? 'selected' : '' %>>Em andamento</option>
+          <option value="FINALIZADA" <%= tarefa.situacao === 'FINALIZADA' ? 'selected' : '' %>>Finalizada</option>
+        </select>
+      <% } %>
+
+      <div class="actions">
+        <button type="submit">Salvar</button>
+        <a href="/tarefas">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

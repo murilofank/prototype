@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Tarefas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .logout a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #a8a8a8;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: medium;
+    }
+
+    .logout a:hover {
+      background-color: #797979;
+    }
+
+    .botao-criar {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .botao-criar:hover {
+      background-color: #218838;
+    }
+
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    label {
+      margin-right: 10px;
+      font-weight: bold;
+    }
+
+    select {
+      padding: 6px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-right: 20px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    a.editar {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: medium;
+    }
+
+    a.editar:hover {
+      text-decoration: underline;
+    }
+
+    .pdf-export {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Minhas Tarefas</h1>
+    <div class="logout">
+      <a href="/logout">Sair</a>
+    </div>
+  </header>
+
+  <a href="/tarefas/nova" class="botao-criar">+ Nova Tarefa</a>
+
+  <!-- Formulário de filtros -->
+  <form method="GET" action="/tarefas">
+    <label for="situacao">Situação:</label>
+    <select name="situacao" id="situacao">
+      <option value="" <%= situacao === '' ? 'selected' : '' %>>Todas</option>
+      <option value="PENDENTE" <%= situacao === 'PENDENTE' ? 'selected' : '' %>>Pendente</option>
+      <option value="EM ANDAMENTO" <%= situacao === 'EM ANDAMENTO' ? 'selected' : '' %>>Em andamento</option>
+      <option value="FINALIZADA" <%= situacao === 'FINALIZADA' ? 'selected' : '' %>>Finalizada</option>
+    </select>
+
+    <label for="ordem">Ordem:</label>
+    <select name="ordem" id="ordem">
+      <option value="desc" <%= ordem === 'desc' ? 'selected' : '' %>>Mais distantes</option>
+      <option value="asc" <%= ordem === 'asc' ? 'selected' : '' %>>Mais próximas</option>
+    </select>
+
+    <button type="submit">Aplicar Filtros</button>
+  </form>
+
+  <!-- Listagem de tarefas -->
+  <table>
+    <thead>
+      <tr>
+        <th>Descrição</th>
+        <th>Data Prevista</th>
+        <th>Data de Encerramento</th>
+        <th>Situação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tarefas.forEach(tarefa => { %>
+        <tr>
+          <td><%= tarefa.descricao %></td>
+          <td><%= tarefa.data_prevista_fmt %></td>
+          <td><%= tarefa.data_encerramento_fmt %></td>
+          <td><%= tarefa.situacao %></td>
+          <td><a href="/tarefas/<%= tarefa.id %>/editar" class="editar">Editar</a></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- Exportar PDF -->
+  <form method="GET" action="/tarefas/exportar-pdf" class="pdf-export">
+    <input type="hidden" name="situacao" value="<%= situacao %>">
+    <input type="hidden" name="ordem" value="<%= ordem %>">
+    <button type="submit">Exportar PDF</button>
+  </form>
+</body>
+</html>
