@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16
+    container_name: postgres-prototype-prod
+    restart: always
+    environment:
+      POSTGRES_USER: prototype_prod
+      POSTGRES_PASSWORD: prototype
+      POSTGRES_DB: prototype_prod
+    volumes:
+      - pgdata_prod:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+    container_name: prototype-app-prod
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "8080:3000"
+    env_file:
+      - .env.prod
+    command: sh -c "npx prisma migrate deploy && psql postgresql://prototype_prod:prototype@db:5432/prototype_prod -f ./db/seed.sql && node index.js"
+
+volumes:
+  pgdata_prod:
+    driver: local
