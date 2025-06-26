@@ -27,18 +27,18 @@ jobs:
       - name: Enviar para VM Homolog
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.HML_HOST }}
-          username: ${{ secrets.HML_USER }}
-          password: ${{ secrets.HML_SSH_KEY }}
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          password: ${{ secrets.VM_PASS }}
           source: .
-          target: /home/${{ secrets.HML_USER }}/prototype-app
+          target: /home/${{ secrets.VM_USER }}/prototype-app
 
       - name: Rodar docker-compose na VM
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HML_HOST }}
-          username: ${{ secrets.HML_USER }}
-          password: ${{ secrets.HML_SSH_KEY }}
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          password: ${{ secrets.VM_PASS }}
           script: |
             cd prototype-app
             docker compose -f docker-compose.hml.yml up -d --build
