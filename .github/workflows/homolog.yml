@@ -31,15 +31,18 @@ jobs:
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASS }}
           port: 22
+          use_insecure_cipher: true
           source: .
           target: /home/${{ secrets.VM_USER }}/prototype-app
 
       - name: Rodar docker-compose na VM
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASS }}
+          port: 22
+          use_insecure_cipher: true
           script: |
             cd prototype-app
             docker compose -f docker-compose.hml.yml up -d --build
