@@ -30,6 +30,8 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASS }}
+          protocol: tcp4
+          port: 22
           script: whoami
 
 #      - name: Enviar para VM Homolog
