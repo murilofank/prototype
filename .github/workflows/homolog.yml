@@ -30,6 +30,7 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASS }}
+          fingerprint: ${{ secrets.VM_FING }}
           use_insecure_cipher: true
           port: 22
           debug: true
