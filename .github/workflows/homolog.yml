@@ -25,21 +25,21 @@ jobs:
         continue-on-error: true
 
       - name: Enviar para VM Homolog
-        uses: appleboy/scp-action@v1.0.0
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          password: ${{ secrets.VM_PASS }}
+          key: ${{ secrets.VM_PASS }}
           port: 22
           source: .
           target: /home/${{ secrets.VM_USER }}/prototype-app
 
       - name: Rodar docker-compose na VM
-        uses: appleboy/ssh-action@v1.0.0
+        uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          password: ${{ secrets.VM_PASS }}
+          key: ${{ secrets.VM_PASS }}
           port: 22
           script: |
             cd prototype-app
