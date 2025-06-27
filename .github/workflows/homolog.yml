@@ -32,6 +32,7 @@ jobs:
           password: ${{ secrets.VM_PASS }}
           use_insecure_cipher: true
           port: 22
+          debug: true
           script: whoami
 
 #      - name: Enviar para VM Homolog
