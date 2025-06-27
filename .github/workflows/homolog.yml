@@ -30,6 +30,7 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_KEY }}
+          passphrase: ${{ secrets.VM_PP }}
           source: .
           target: /home/${{ secrets.VM_USER }}/prototype-app
 
@@ -38,7 +39,8 @@ jobs:
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          password: ${{ secrets.VM_PASS }}
+          key: ${{ secrets.VM_KEY }}
+          passphrase: ${{ secrets.VM_PP }}
           script: |
             cd prototype-app
             docker compose -f docker-compose.hml.yml up -d --build
