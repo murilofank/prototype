@@ -29,11 +29,10 @@ jobs:
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          password: ${{ secrets.VM_PASS }}
+          key: ${{ secrets.VM_KEY }}
           fingerprint: ${{ secrets.VM_FING }}
           use_insecure_cipher: true
           port: 22
-          debug: true
           script: whoami
 
 #      - name: Enviar para VM Homolog
