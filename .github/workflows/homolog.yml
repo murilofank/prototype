@@ -23,20 +23,23 @@ jobs:
       - name: Rodar testes
         run: npm run test || true
 
+      - name: Setup ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.VM_KEY }}
+
+      - name: Add host to known_hosts
+        run: ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
+  
       - name: Enviar para VM homolog
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.VM_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VM_HOST }} >> ~/.ssh/known_hosts
-
           rsync -avvz --delete \
-            -e "ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
+            -e "ssh -vvv -o StrictHostKeyChecking=no" \
             ./ \
             ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }}:/home/${{ secrets.VM_USER }}/prototype-app
 
       - name: Rodar docker-compose na VM
         run: |
-          ssh -vvv -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no \
+          ssh -vvv -o StrictHostKeyChecking=no \
             ${{ secrets.VM_USER }}@${{ secrets.VM_HOST }} \
             "cd /home/${{ secrets.VM_USER }}/prototype-app && docker compose -f docker-compose.hml.yml up -d --build"
