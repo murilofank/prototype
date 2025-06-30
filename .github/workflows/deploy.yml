@@ -18,7 +18,7 @@ jobs:
           node-version: 20
 
       - name: Instalar dependências
-        run: npm ci
+        run: npm install
 
       - name: Rodar testes
         run: npm run test || true
@@ -26,13 +26,17 @@ jobs:
       - name: Subir containers
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            cp .env.prod .env
-            docker compose -f docker-compose.prod.yml down
-            docker compose -f docker-compose.prod.yml up -d --build
+            docker-compose -f docker-compose.prod.yml down
+            docker-compose -f docker-compose.prod.yml up -d --build
             npx prisma migrate deploy
           else
-            cp .env.hml .env
-            docker compose -f docker-compose.hml.yml down
-            docker compose -f docker-compose.hml.yml up -d --build
+            docker-compose -f docker-compose.hml.yml down
+            docker-compose -f docker-compose.hml.yml up -d --build
             npx prisma migrate deploy
           fi
+        env:
+          DATABASE_URL_HML: ${{ secrets.DATABASE_URL_HML }}
+          DATABASE_URL_PROD: ${{ secrets.DATABASE_URL_PROD }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
