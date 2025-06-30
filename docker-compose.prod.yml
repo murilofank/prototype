@@ -28,7 +28,7 @@ services:
     command: sh -c "
       npx prisma migrate deploy && \
       psql postgresql://prototype_prod:prototype@db:5432/prototype_prod -f ./db/seed.sql && \
-      node index.js"
+      npm run start:prod"
 
 volumes:
   pgdata_prod:

@@ -17,4 +17,4 @@ RUN npx prisma generate
 EXPOSE 3000
 
 # Comando de inicialização
-CMD ["node", "index.js"]
+CMD ["npm", "run", "start:hml"]

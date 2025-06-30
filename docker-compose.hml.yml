@@ -29,7 +29,7 @@ services:
       sleep 10 && \
       npx prisma migrate deploy && \
       psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && \
-      node index.js"
+      npm run start:hml"
 
 volumes:
   pgdata_hml:
