@@ -12,6 +12,3 @@ RUN npm install
 COPY . .
 
 EXPOSE 3000
-
-# Comando de inicialização
-CMD ["npm", "run", "start:hml"]
