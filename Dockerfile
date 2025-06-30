@@ -8,9 +8,11 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npx prisma generate
-
 # Copia o restante dos arquivos do projeto
 COPY . .
 
+RUN npx prisma generate
+
 EXPOSE 3000
+
+CMD ["npm", "run", "start:hml"]
