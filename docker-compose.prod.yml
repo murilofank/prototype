@@ -27,7 +27,7 @@ services:
       - .env.prod
     command: sh -c "
       npx prisma migrate deploy && \
-      psql ${DATABASE_URL} -f ./db/seed.sql && \
+      psql postgresql://prototype_prod:prototype@db:5432/prototype_prod -f ./db/seed.sql && \
       node index.js"
 
 volumes:
