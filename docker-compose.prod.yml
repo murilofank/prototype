@@ -31,8 +31,7 @@ services:
     command: sh -c "
       npx prisma migrate deploy && \
       psql ${DATABASE_URL} -f ./db/seed.sql && \
-      node index.js
-    "
+      node index.js"
 
 volumes:
   pgdata_prod:

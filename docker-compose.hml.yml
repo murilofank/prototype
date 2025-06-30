@@ -32,8 +32,7 @@ services:
       sleep 10 && \
       npx prisma migrate deploy && \
       psql ${DATABASE_URL} -f ./db/seed.sql && \
-      node index.js
-    "
+      node index.js"
 
 volumes:
   pgdata_hml:
