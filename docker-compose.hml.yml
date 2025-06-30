@@ -28,7 +28,12 @@ services:
       SESSION_SECRET: ${SESSION_SECRET}
       EMAIL_USER: ${EMAIL_USER}
       EMAIL_PASS: ${EMAIL_PASS}
-    command: sh -c "npx prisma migrate deploy && psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && node index.js"
+    command: sh -c "
+      sleep 10 && \
+      npx prisma migrate deploy && \
+      psql ${DATABASE_URL} -f ./db/seed.sql && \
+      node index.js
+    "
 
 volumes:
   pgdata_hml:

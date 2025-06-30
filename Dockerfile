@@ -5,7 +5,6 @@ WORKDIR /prototype-app
 
 # Copia os arquivos de dependência
 COPY package*.json ./
-COPY .env* ./
 
 RUN npm install
 
@@ -18,4 +17,4 @@ RUN npx prisma generate
 EXPOSE 3000
 
 # Comando de inicialização
-CMD ["sh", "-c", "npx prisma migrate deploy && node index.js"]
+CMD ["node", "index.js"]
