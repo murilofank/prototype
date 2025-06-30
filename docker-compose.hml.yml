@@ -27,6 +27,7 @@ services:
       - .env.hml
     command: sh -c "
       sleep 10 && \
+      npx prisma generate && \
       npx prisma migrate deploy && \
       psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && \
       npm run start:hml"
