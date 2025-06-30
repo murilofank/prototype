@@ -25,11 +25,16 @@ jobs:
 
       - name: Subir containers
         run: |
+          export SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+          export EMAIL_USER=${{ secrets.EMAIL_USER }}
+          export EMAIL_PASS=${{ secrets.EMAIL_PASS }}
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            export DATABASE_URL=${{ secrets.DATABASE_URL_PROD }}
             sudo docker-compose -f docker-compose.prod.yml down
             sudo docker-compose -f docker-compose.prod.yml up -d --build
             npx prisma migrate deploy
           else
+            export DATABASE_URL=${{ secrets.DATABASE_URL_HML }}
             sudo docker-compose -f docker-compose.hml.yml down
             sudo docker-compose -f docker-compose.hml.yml up -d --build
             npx prisma migrate deploy
