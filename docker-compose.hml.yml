@@ -29,8 +29,6 @@ services:
       npx prisma migrate deploy && \
       psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && \
       npm run start:hml"
-    environment:
-      - DATABASE_URL=postgresql://prototype_hml:prototype@db:5432/prototype_hml
 
 volumes:
   pgdata_hml:
