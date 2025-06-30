@@ -26,12 +26,12 @@ jobs:
       - name: Subir containers
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            docker-compose -f docker-compose.prod.yml down
-            docker-compose -f docker-compose.prod.yml up -d --build
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml up -d --build
             npx prisma migrate deploy
           else
-            docker-compose -f docker-compose.hml.yml down
-            docker-compose -f docker-compose.hml.yml up -d --build
+            sudo docker-compose -f docker-compose.hml.yml down
+            sudo docker-compose -f docker-compose.hml.yml up -d --build
             npx prisma migrate deploy
           fi
         env:
