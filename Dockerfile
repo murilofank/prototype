@@ -11,9 +11,6 @@ RUN npm install
 # Copia o restante dos arquivos do projeto
 COPY . .
 
-# Garante que o Prisma CLI esteja disponível
-RUN npx prisma generate
-
 EXPOSE 3000
 
 # Comando de inicialização
