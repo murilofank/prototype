@@ -4,7 +4,7 @@ FROM node:20
 WORKDIR /prototype-app
 
 # Copia os arquivos de dependência
-COPY package.json package-lock.json* .
+COPY package*.json ./
 
 RUN npm install
 
