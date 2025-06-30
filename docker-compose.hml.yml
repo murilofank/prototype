@@ -26,11 +26,8 @@ services:
     env_file:
       - .env.hml
     command: sh -c "
-      sleep 10 && \
-      echo $DATABASE_URL && \
-      npx prisma migrate deploy && \
-      psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && \
-      npm run start:hml"
+      npm run start:hml && \
+      psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql"
 
 volumes:
   pgdata_hml:
