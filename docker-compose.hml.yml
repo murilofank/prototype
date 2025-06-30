@@ -26,6 +26,7 @@ services:
     env_file:
       - .env.hml
     command: sh -c "
+      dotenv -e .env.hml -- npx prisma migrate deploy && \
       npm run start:hml && \
       psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql"
 
