@@ -5,6 +5,7 @@ WORKDIR /prototype-app
 
 # Copia os arquivos de dependência
 COPY package*.json ./
+COPY .env* ./
 
 RUN npm install
 
