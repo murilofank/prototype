@@ -28,7 +28,7 @@ services:
     command: sh -c "
       sleep 10 && \
       npx prisma migrate deploy && \
-      psql ${DATABASE_URL} -f ./db/seed.sql && \
+      psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && \
       node index.js"
 
 volumes:

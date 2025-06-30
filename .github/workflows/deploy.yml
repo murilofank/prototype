@@ -26,10 +26,12 @@ jobs:
       - name: Subir containers
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            cp /home/univates/prototype-app/.env.prod .env.prod
             sudo docker-compose -f docker-compose.prod.yml down
             sudo docker-compose -f docker-compose.prod.yml up -d --build
             npx prisma migrate deploy
           else
+            cp /home/univates/prototype-app/.env.hml .env.hml
             sudo docker-compose -f docker-compose.hml.yml down
             sudo docker-compose -f docker-compose.hml.yml up -d --build
             npx prisma migrate deploy
