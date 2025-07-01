@@ -26,17 +26,11 @@ jobs:
       - name: Subir containers
         run: |
           if [ "${{ github.ref }}" == "refs/heads/main" ]; then
-            docker compose -f docker-compose.prod.yml down
-            docker compose -f docker-compose.prod.yml up -d --build
-            npx prisma migrate deploy
+            cp /home/univates/prototype-app/.env.prod .env
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml up -d --build
           else
-            docker compose -f docker-compose.hml.yml down
-            docker compose -f docker-compose.hml.yml up -d --build
-            npx prisma migrate deploy
+            cp /home/univates/prototype-app/.env.hml .env
+            sudo docker-compose -f docker-compose.hml.yml down
+            sudo docker-compose -f docker-compose.hml.yml up -d --build
           fi
-        env:
-          DATABASE_URL_HML: ${{ secrets.DATABASE_URL_HML }}
-          DATABASE_URL_PROD: ${{ secrets.DATABASE_URL_PROD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          EMAIL_USER: ${{ secrets.EMAIL_USER }}
-          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}

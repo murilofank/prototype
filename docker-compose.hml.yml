@@ -23,12 +23,9 @@ services:
       - db
     ports:
       - "8081:3000"
-    environment:
-      DATABASE_URL: ${DATABASE_URL_HML}
-      SESSION_SECRET: ${SESSION_SECRET}
-      EMAIL_USER: ${EMAIL_USER}
-      EMAIL_PASS: ${EMAIL_PASS}
-    command: sh -c "npx prisma migrate deploy && psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && node index.js"
+    env_file:
+      - .env
+    command: start
 
 volumes:
   pgdata_hml:

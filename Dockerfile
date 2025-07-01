@@ -4,17 +4,17 @@ FROM node:20
 WORKDIR /prototype-app
 
 # Copia os arquivos de dependência
-COPY package.json package-lock.json* .
+COPY package*.json ./
 
 RUN npm install
 
 # Copia o restante dos arquivos do projeto
 COPY . .
 
-# Garante que o Prisma CLI esteja disponível
-RUN npx prisma generate
+RUN chmod +x ./entrypoint.sh
+
+RUN npx prisma generate --schema=./prisma/schema.prisma
 
 EXPOSE 3000
 
-# Comando de inicialização
-CMD ["sh", "-c", "npx prisma migrate deploy && node index.js"]
+ENTRYPOINT ["./entrypoint.sh"]
