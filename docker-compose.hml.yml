@@ -25,9 +25,7 @@ services:
       - "8081:3000"
     env_file:
       - .env
-    command: sh -c "
-      npx prisma migrate deploy && \
-      npm run start:hml"
+    command: start:hml
 
 volumes:
   pgdata_hml:
