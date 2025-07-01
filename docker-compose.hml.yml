@@ -25,7 +25,7 @@ services:
       - "8081:3000"
     env_file:
       - .env
-    command: npm run start:hml
+    command: start:hml
 
 volumes:
   pgdata_hml:
