@@ -27,7 +27,6 @@ services:
       - .env
     command: sh -c "
       npx prisma migrate deploy && \
-      psql postgresql://prototype_hml:prototype@db:5432/prototype_hml -f ./db/seed.sql && \
       npm run start:hml"
 
 volumes:
