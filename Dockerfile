@@ -13,8 +13,6 @@ COPY . .
 
 RUN chmod +x ./entrypoint.sh
 
-RUN npx prisma generate
-
 EXPOSE 3000
 
 ENTRYPOINT ["./entrypoint.sh"]
