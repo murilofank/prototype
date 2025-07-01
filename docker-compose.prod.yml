@@ -24,11 +24,8 @@ services:
     ports:
       - "8080:3000"
     env_file:
-      - .env.prod
-    command: sh -c "
-      dotenv -e .env.prod -- npx prisma migrate deploy && \
-      psql postgresql://prototype_prod:prototype@db:5432/prototype_prod -f ./db/seed.sql && \
-      npm run start:prod"
+      - .env
+    command: start
 
 volumes:
   pgdata_prod:
