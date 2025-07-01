@@ -11,7 +11,10 @@ RUN npm install
 # Copia o restante dos arquivos do projeto
 COPY . .
 
+RUN chmod +x ./entrypoint.sh
+
 RUN npx prisma generate
-RUN npx prisma migrate deploy
 
 EXPOSE 3000
+
+ENTRYPOINT ["./entrypoint.sh"]
