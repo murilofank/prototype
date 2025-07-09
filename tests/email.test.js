@@ -1,17 +1,28 @@
-import { describe, it, vi, expect } from 'vitest';
 import { enviarEmail } from '../services/email.js';
 import nodemailer from 'nodemailer';
 
 vi.mock('nodemailer');
 
 describe('enviarEmail', () => {
+    
+  beforeEach(() => {
+      vi.clearAllMocks();
+  });
+
+  const mockUser = 'mockeduser@example.com';
+  const mockPass = 'mockedpassword';
+  process.env.EMAIL_USER = mockUser;
+  process.env.EMAIL_PASS = mockPass;
+
+  const destinatario = 'test@example.com';
+  const assunto = 'Test Subject';
+  const conteudoHtml = '<p>Test Content</p>';
+
   it('should send an email with the correct parameters', async () => {
     const sendMailMock = vi.fn().mockResolvedValue({});
-    nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
-
-    const destinatario = 'test@example.com';
-    const assunto = 'Test Subject';
-    const conteudoHtml = '<p>Test Content</p>';
+    nodemailer.createTransport.mockReturnValue({
+       sendMail: sendMailMock, 
+    });
 
     await enviarEmail(destinatario, assunto, conteudoHtml);
 
@@ -35,10 +46,8 @@ describe('enviarEmail', () => {
     const sendMailMock = vi.fn().mockRejectedValue(new Error('Failed to send email'));
     nodemailer.createTransport.mockReturnValue({ sendMail: sendMailMock });
 
-    const destinatario = 'test@example.com';
-    const assunto = 'Test Subject';
-    const conteudoHtml = '<p>Test Content</p>';
-
-    await expect(enviarEmail(destinatario, assunto, conteudoHtml)).rejects.toThrow('Failed to send email');
+    await expect(enviarEmail(destinatario, assunto, conteudoHtml))
+      .rejects
+      .toThrow('Failed to send email');
   });
 });

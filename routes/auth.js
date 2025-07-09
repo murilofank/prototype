@@ -14,6 +14,7 @@ router.post('/login', async (req, res) => {
   const { email, senha } = req.body;
 
   const usuario = await prisma.usuario.findUnique({ where: { email } });
+  
   if (!usuario || !await bcrypt.compare(senha, usuario.senha)) {
     return res.render('login', { error: 'Email ou senha inválidos', title: 'Login' });
   }

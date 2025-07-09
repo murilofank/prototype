@@ -187,3 +187,4 @@ async function htmlEmailContent(assunto, nomeUsuario, tipoAcao, descricao, dataP
 }
 
 export default router;
+export { htmlEmailContent };
