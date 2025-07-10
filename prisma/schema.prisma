@@ -34,3 +34,10 @@ model Usuario {
 
   @@map("usuario")
 }
+
+model Categoria {
+  id      Int      @id @default(autoincrement())
+  descricao    String
+
+  @@map("categoria")
+}
